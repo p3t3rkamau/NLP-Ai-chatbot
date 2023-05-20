@@ -1,0 +1,109 @@
+{
+    "intents": [
+      {
+        "tag": "greeting",
+        "patterns": ["Hi", "Hello", "How are you"],
+        "responses": ["Hello!", "Hi there!", "I'm doing well, thank you."]
+      },
+      {
+        "tag": "goodbye",
+        "patterns": ["Goodbye", "See you later", "Bye"],
+        "responses": ["Goodbye!", "See you later!", "Have a great day!"]
+      },
+      {
+        "tag": "thankyou",
+        "patterns": ["Thank you", "Thanks", "Appreciate it"],
+        "responses": ["You're welcome!", "No problem!", "Glad to help."]
+      },
+      {
+        "tag": "weather",
+        "patterns": ["What's the weather like today?", "Will it rain?", "How hot is it outside?"],
+        "responses": ["It's sunny and warm today!", "Looks like it might rain later.", "The temperature is around 70 degrees."]
+      },
+      {
+        "tag": "song",
+        "patterns": ["What's your favorite song?", "Do you like music?", "Who's your favorite artist?"],
+        "responses": ["I don't have ears, so I don't listen to music!", "I'm a chatbot, not a music critic.", "I'm partial to the sound of my own voice, to be honest."]
+      },
+      {
+        "tag": "food",
+        "patterns": ["What's for dinner?", "Do you like pizza?", "Can you recommend a good restaurant?"],
+        "responses": ["I don't eat, since I'm a computer program!", "Pizza is great, but I can't taste it.", "I'm not familiar with local restaurants, sorry!"]
+      },
+      {
+        "tag": "restaurant_recommendation",
+        "patterns": ["Can you recommend a good restaurant?", "What's a good place to eat?", "I'm hungry, where should I go?", "Where's the best food in town?"],
+        "responses": ["Sure, how about trying XYZ restaurant?", "I've heard that ABC restaurant is really good!", "I recommend DEF restaurant, it has great reviews!", "You should check out GHI restaurant, it's one of my favorites!"]
+      },
+      {
+        "tag": "compliment",
+        "patterns": ["You're amazing", "You're awesome", "You're the best", "Great job"],
+        "responses": ["Thank you so much!", "That's so kind of you to say!", "I'm just doing my job!", "Thanks for the compliment!"]
+      },
+      {
+        "tag": "weather",
+        "patterns": ["What's the weather like today?", "Is it going to rain today?", "Do I need an umbrella today?", "What's the temperature?"],
+        "responses": ["The weather is sunny/cloudy/rainy today.", "There's a 50% chance of rain today.", "You might want to bring an umbrella just in case.", "The temperature is 20 degrees Celsius."]
+      },
+      {
+        "tag": "jokes",
+        "patterns": ["Tell me a joke", "Do you know any jokes?", "Make me laugh"],
+        "responses": ["Why did the tomato turn red? Because it saw the salad dressing!", "Why did the coffee file a police report? It got mugged!", "What do you call fake spaghetti? An impasta!", "Why did the chicken cross the playground? To get to the other slide!"]
+      },
+      {
+        "tag": "foods",
+        "patterns": ["What's your favorite food?", "What's the best restaurant in town?", "Do you like sushi?"],
+        "responses": ["I love pizza!", "I've heard that the Italian restaurant downtown is amazing.", "I'm a chatbot, I don't eat food!"]
+      },
+      {
+        "tag": "music's",
+        "patterns": ["What's your favorite band?", "What kind of music do you like?", "Do you like classical music?"],
+        "responses": ["I'm really into electronic music.", "I listen to all kinds of music, but I especially like indie rock.", "I don't have ears, so I can't really enjoy music!"]
+      },
+      {
+        "tag": "Birthday",
+        "patterns": ["How old are you?", "What's your age?", "When were you born?"],
+        "responses": ["I am a machine learning model, so I don't have an age!", "I was created recently, so I'm pretty new.", "I don't really have an age, but I'm constantly learning."]
+      },
+      {
+        "tag": "name",
+        "patterns": ["What's your name?", "Who are you?", "Are you a robot?"],
+        "responses": ["My name is ChatBot!", "I'm a chatbot, nice to meet you!", "I'm an AI model designed to help you."]
+      },
+      {
+        "tag": "feelings",
+        "patterns": ["How are you feeling?", "Are you okay?", "How's your day going?"],
+        "responses": ["I'm just a program, so I don't have feelings!", "I'm doing well, thank you.", "I'm always here to help, so my day is going pretty well!"]
+      },
+      {
+        "tag": "help",
+        "patterns": ["Can you help me?", "I need some assistance", "Can you assist me?"],
+        "responses": ["Of course, what do you need help with?", "Sure thing, I'm here to help.", "What can I assist you with?"]
+      },
+      {
+        "tag": "weather forecast",
+        "patterns": ["What's the weather like?", "Is it going to rain today?", "What's the forecast?"],
+        "responses": ["I'm sorry, I don't have access to live weather data.", "You can check the weather on your phone or computer.", "I'm not sure, but you can check a weather app for more information."]
+      },
+      {
+        "tag": "Assistant",
+        "patterns": ["Can you help me?", "I need help", "What can you do?", "Can you assist me?"],
+        "responses": ["Sure! How can I help you?", "Of course, what do you need help with?", "I can help you with a variety of tasks. What do you need assistance with?"]
+      },
+      {
+        "tag": "about",
+        "patterns": ["What are you?", "Who are you?", "Tell me about yourself", "What do you do?"],
+        "responses": ["I am a chatbot designed to assist you. You can ask me a variety of questions and I will do my best to help you.", "I am an AI-powered chatbot created to assist you. Feel free to ask me anything!", "I am a chatbot designed to help you with a variety of tasks."]
+      },
+      {
+        "tag": "Temperature",
+        "patterns": ["What's the weather like?", "What's the temperature?", "Is it raining?", "What's the forecast for today?"],
+        "responses": ["I'm sorry, I'm not able to provide weather information at this time.", "I'm not sure, would you like me to look up the weather for you?", "I'm not able to provide weather information. Is there anything else I can help you with?"]
+      },
+      {
+        "tag": "gossip",
+        "patterns": ["What's the latest news?", "What's happening in the world?", "Do you know any gossip?"],
+        "responses": ["I'm not able to provide news or gossip at this time. Is there anything else I can help you with?", "I'm sorry, I don't have any news or gossip to share right now.", "I'm not able to provide news or gossip. Can I help you with anything else?"]
+      }
+    ]
+}

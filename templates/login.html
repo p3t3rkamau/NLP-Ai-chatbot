@@ -1,0 +1,77 @@
+
+
+
+<!doctype html>
+<html>
+  <head>
+    <title>Image Gallery</title>
+    <style>
+      .image-container {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .image-container img {
+        max-width: 200px;
+        max-height: 200px;
+        display: block;
+        margin: 0 auto;
+      }
+      .image-container p {
+        text-align: center;
+        margin-top: 10px;
+      }
+      .login-form {
+        margin: 50px auto;
+        width: 300px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .login-form label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      .login-form input[type="text"],
+      .login-form input[type="password"] {
+        width: 100%;
+        padding: 5px;
+        border-radius: 3px;
+        border: 1px solid #ddd;
+        margin-bottom: 20px;
+      }
+      .login-form input[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+      }
+      h1{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    {% block content %}
+    <h1>Login</h1>
+    {% if error %}
+      <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <div class="login-form">
+        <form method="POST" action="{{ url_for('login') }}">
+          <input type="text" name="username" placeholder="Username" required><br><br>
+          <input type="password" name="password" placeholder="Password" required><br><br>
+          <input type="submit" value="Login">
+        </form>
+      {% endblock %}
+    </div>
+  </body>
+</html>

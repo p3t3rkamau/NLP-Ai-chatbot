@@ -1,0 +1,20 @@
+2023-05-18 14:04:22.384394 - User: hi
+2023-05-18 14:04:22.384394 - Chatbot: Hi there!
+2023-05-20 22:22:47.928695 - User: hi
+2023-05-20 22:22:47.928695 - Chatbot: Hi there!
+2023-05-20 22:23:47.328815 - User: what is chatgpt
+2023-05-20 22:23:47.328815 - Chatbot: I'm sorry, I don't have the information about that question.
+2023-05-20 22:23:57.051978 - User: Who is Obama?
+2023-05-20 22:23:57.051978 - Chatbot: Barack Obama is the 44th President of the United States.
+2023-05-20 22:24:07.149349 - User: what is the time
+2023-05-20 22:24:07.149349 - Chatbot: The current time is 22:24.⌚
+2023-05-20 22:24:24.522216 - User: what is the time
+2023-05-20 22:24:24.522216 - Chatbot: The current time is 22:24.⌚
+2023-05-20 22:24:48.609448 - User: hi
+2023-05-20 22:24:48.609448 - Chatbot: I'm doing well, thank you.
+2023-05-20 22:25:06.282733 - User: hello how are you
+2023-05-20 22:25:06.282733 - Chatbot: Hello!
+2023-05-20 22:25:12.068649 - User: hello how are you
+2023-05-20 22:25:12.068649 - Chatbot: Hi there!
+2023-05-20 22:25:19.785334 - User: ddddd
+2023-05-20 22:25:19.785334 - Chatbot: I'm sorry, I didn't understand that. Can you please try again?

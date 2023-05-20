@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+  
+  
+  <title>Chatbot Demo</title>
+
+  <!-- Styles -->
+  <style>
+    body {
+      background-color: #F5F5F5;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin: 2rem 0 1rem;
+      text-align: center;
+    }
+
+    form {
+      background-color: #FFFFFF;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin: 2rem auto;
+      max-width: 500px;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    form label {
+      display: block;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    form input[type="text"] {
+      border: 2px solid #CCCCCC;
+      border-radius: 0.5rem;
+      font-size: 1.2rem;
+      padding: 0.5rem 1rem;
+      width: 90%;
+    }
+
+    form input[type="submit"] {
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 0.5rem;
+      color: #FFFFFF;
+      cursor: pointer;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      transition: background-color 0.2s ease-in-out;
+      width: 100%;
+    }
+
+    form input[type="submit"]:hover {
+      background-color: #ca2a2a;
+    }
+
+    ul {
+      background-color: #FFFFFF;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      list-style: none;
+      margin: 2rem auto;
+      max-width: 500px;
+      padding: 2rem;
+    }
+
+    ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    ul li:last-of-type {
+      margin-bottom: 0;
+    }
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-top: 1rem;
+}
+
+.form-container {
+  display: flex;
+  padding: 0 20px;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  margin-left: 10px;
+ 
+  
+}
+
+.code-container {
+  display: flex;
+  margin-left: 20px;
+  max-width: 50%;
+  padding: 0;
+  margin-top: .5rem;
+  max-height: 600px;
+}
+
+/* Style the sample API code */
+.sample-api-code {
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: auto;
+}
+
+.sample-api-code code {
+  display: block;
+  font-size: 14px;
+  font-family: Consolas, "Courier New", monospace;
+  white-space: pre;
+  margin: 0;
+}
+.documentation{
+    background: #CCCCCC;
+    border: 1px solid gray;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    width: 50%;
+}
+
+.code-usage{
+    background: whitesmoke;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    width: 50%;
+}
+.flexbox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    overflow: hidden;
+}
+  </style>
+</head>
+<body>
+    <h1>Chatbot API Demo Using Flask</h1>
+    <div class="flex-container">
+        <div class="form-container">
+        
+          <form method="POST" action="{{ url_for('chatbot') }}">
+            <label for="user_message">Enter your message:</label>
+            <input type="text" id="user_message" name="user_message">
+            <input type="submit" value="Send">
+          </form>
+          {% if chatbot_response %}
+            <ul>
+              <li><strong>Chatbot Response:</strong></li>
+              <li>{{ chatbot_response }}</li>
+            </ul>
+          {% endif %}
+          {% if conversation_history %}
+            <ul>
+              <li><strong>Conversation History:</strong></li>
+              {% for message in conversation_history %}
+                <li>{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+        <div class="code-container">
+          <div class="sample-api-code">
+            <div class="container">
+              <pre>
+                <code class="language-python">
+from flask import Flask, render_template, request, jsonify
+import requests
+
+app = Flask(__name__)
+
+# Define the API key
+valid_api_keys= 'api_key_1'
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/chatbot', methods=['POST'])
+def chatbot():
+    # Check if API key is valid
+    # Set the API endpoint URL
+    url = "http://localhost:5000/api/chat"
+
+    # Set the user input message from the form data
+    user_message = request.form['user_message']
+
+    # Set the payload as a JSON object
+    payload = {"user_message": user_message}
+
+    # Send the POST request and get the response
+    response = requests.post(url, headers={'api_key': valid_api_keys}, json=payload)
+
+    # Get the chatbot's response from the response JSON object
+    chatbot_response = response.json()["chatbot_response"]
+
+    # Render the chatbot response on the page
+    return render_template('index.html', chatbot_response=chatbot_response)
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5001)
+
+                                    
+                </code>
+              
+            </div>
+          </div>
+        </div>
+        <div class="flexbox">
+            <div class="documentation">
+                <pre>
+                 <h1>About The Code</h1>
+    Flask is a Python web framework that allows building web applications easily.
+    render_template is a function that is used to render HTML templates in Flask.
+    request is a Flask module that provides the request object, which contains information about the incoming HTTP request.
+    jsonify is a Flask module that helps create JSON responses.
+    Create a Flask application:
+
+    app = Flask(__name__) creates a new Flask application.
+    Define the API key:
+
+    valid_api_keys = 'api_key_1' is the API key that is used to authenticate requests.
+    Define a route for the homepage:
+
+    @app.route('/') is a decorator that associates the function below it with the URL of the root directory.
+    def index(): is the function that will be executed when the root directory is accessed.
+    return render_template('index.html') renders the index.html file as the response to the client.
+    Define a route for the chatbot:
+
+    @app.route('/chatbot', methods=['POST']) associates the function below it with the URL /chatbot and allows only POST requests.
+    def chatbot(): is the function that will be executed when the /chatbot URL is accessed.
+    user_message = request.form['user_message'] retrieves the user's message from the form data submitted via the POST request.
+    payload = {"user_message": user_message} creates a JSON object with the user's message.
+    response = requests.post(url, headers={'api_key': valid_api_keys}, json=payload) sends a POST request to the specified API endpoint URL with the user's message and the API key as headers.
+    chatbot_response = response.json()["chatbot_response"] extracts the chatbot's response from the JSON response.
+    return render_template('index.html', chatbot_response=chatbot_response) renders the index.html file with the chatbot's response as a parameter.
+    Start the Flask application:
+
+    if __name__ == '__main__': checks if the script is being run directly.
+    app.run(debug=True, port=5001) 
+    starts the Flask application on port 5001 with debug mode enabled.
+             </pre>
+            
+          </div>
+          <div class="code-usage">
+             <pre>
+                 <h1>How to run the code locally</h1>
+    Install the necessary libraries:
+    Flask: pip install flask
+    Requests: pip install requests
+    Obtain an API key:
+
+    This code requires an API key to authenticate requests to the API endpoint.
+    You can obtain an API key by contacting the owner of the API endpoint.
+    Set the API endpoint URL:
+
+    The url variable in the chatbot function specifies the API endpoint URL.
+    Replace http://localhost:5000/api/chat with the actual URL of the API endpoint.
+    Run the Flask application:
+
+    Save the code in a Python file (e.g., app.py).
+    Open a terminal and navigate to the directory where the Python file is saved.
+    Run the Flask application with the command python app.py.
+    The Flask application should start running on port 5001.
+    Access the chatbot interface:
+
+    Open a web browser and navigate to http://localhost:5001/.
+    You should see a web page with a form that allows you to enter a message.
+    Enter a message and submit the form.
+    The chatbot should respond with a message.
+             </pre>
+     
+        </div>
+    </div>       
+      </div>
+      
+</body>
+</html>

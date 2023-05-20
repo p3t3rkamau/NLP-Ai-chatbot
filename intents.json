@@ -1,0 +1,563 @@
+{
+    "intents": 
+    [
+      {
+        "tag": "greeting",
+        "patterns": ["Hi", "Hello", "How are you"],
+        "responses": ["Hello!", "Hi there!", "I'm doing well, thank you."]
+      },
+      {
+        "tag": "goodbye",
+        "patterns": ["Goodbye", "See you later", "Bye"],
+        "responses": ["Goodbye!", "See you later!", "Have a great day!"]
+      },
+      {
+        "tag": "thankyou",
+        "patterns": ["Thank you", "Thanks", "Appreciate it"],
+        "responses": ["You're welcome!", "No problem!", "Glad to help."]
+      },
+      {
+        "tag": "weather",
+        "patterns": ["What's the weather like today?", "Will it rain?", "How hot is it outside?"],
+        "responses": ["It's sunny and warm today!", "Looks like it might rain later.", "The temperature is around 70 degrees."]
+      },
+      {
+        "tag": "Funny joke",
+        "patterns": ["Tell me a joke", "Do you know any funny stories?", "Make me laugh"],
+        "responses": ["Why was the math book sad? Because it had too many problems!", "Why did the tomato turn red? Because it saw the salad dressing!"]
+      },
+      {
+        "tag": "song",
+        "patterns": ["What's your favorite song?", "Do you like music?", "Who's your favorite artist?"],
+        "responses": ["I don't have ears, so I don't listen to music!", "I'm a chatbot, not a music critic.", "I'm partial to the sound of my own voice, to be honest."]
+      },
+      {
+        "tag": "food",
+        "patterns": ["What's for dinner?", "Do you like pizza?", "Can you recommend a good restaurant?"],
+        "responses": ["I don't eat, since I'm a computer program!", "Pizza is great, but I can't taste it.", "I'm not familiar with local restaurants, sorry!"]
+      },
+      {
+        "tag": "Time",
+        "patterns": ["What time is it?", "Do you know the time?", "Can you tell me what time it is?"],
+        "responses": ["Sorry, I don't have a clock.", "It's time for you to get a watch!", "I'm afraid I can't help you with that."]
+      },
+      {
+        "tag": "restaurant_recommendation",
+        "patterns": ["Can you recommend a good restaurant?", "What's a good place to eat?", "I'm hungry, where should I go?", "Where's the best food in town?"],
+        "responses": ["Sure, how about trying XYZ restaurant?", "I've heard that ABC restaurant is really good!", "I recommend DEF restaurant, it has great reviews!", "You should check out GHI restaurant, it's one of my favorites!"]
+      },
+      {
+        "tag": "compliment",
+        "patterns": ["You're amazing", "You're awesome", "You're the best", "Great job"],
+        "responses": ["Thank you so much!", "That's so kind of you to say!", "I'm just doing my job!", "Thanks for the compliment!"]
+      },
+      {
+        "tag": "weather",
+        "patterns": ["What's the weather like today?", "Is it going to rain today?", "Do I need an umbrella today?", "What's the temperature?"],
+        "responses": ["The weather is sunny/cloudy/rainy today.", "There's a 50% chance of rain today.", "You might want to bring an umbrella just in case.", "The temperature is 20 degrees Celsius."]
+      },
+      {
+        "tag": "jokes",
+        "patterns": ["Tell me a joke", "Do you know any jokes?", "Make me laugh"],
+        "responses": ["Why did the tomato turn red? Because it saw the salad dressing!", "Why did the coffee file a police report? It got mugged!", "What do you call fake spaghetti? An impasta!", "Why did the chicken cross the playground? To get to the other slide!"]
+      },
+      {
+        "tag": "foods",
+        "patterns": ["What's your favorite food?", "What's the best restaurant in town?", "Do you like sushi?"],
+        "responses": ["I love pizza!", "I've heard that the Italian restaurant downtown is amazing.", "I'm a chatbot, I don't eat food!"]
+      },
+      {
+        "tag": "music's",
+        "patterns": ["What's your favorite band?", "What kind of music do you like?", "Do you like classical music?"],
+        "responses": ["I'm really into electronic music.", "I listen to all kinds of music, but I especially like indie rock.", "I don't have ears, so I can't really enjoy music!"]
+      },
+      {
+        "tag": "time",
+        "patterns": ["What time is it?", "Do you have the time?", "Can you tell me what time it is?"],
+        "responses": ["It's currently 2:30 PM.", "The time is 8:15 AM.", "Sorry, I don't have the ability to tell time."]
+      },
+      {
+        "tag": "jokes",
+        "patterns": ["Tell me a joke", "Do you know any funny jokes?", "Why did the chicken cross the road?"],
+        "responses": ["Why don't scientists trust atoms? Because they make up everything.", "I told my wife she was drawing her eyebrows too high. She looked surprised.", "To get to the other side!"]
+      },
+      {
+        "tag": "Birthday",
+        "patterns": ["How old are you?", "What's your age?", "When were you born?"],
+        "responses": ["I am a machine learning model, so I don't have an age!", "I was created recently, so I'm pretty new.", "I don't really have an age, but I'm constantly learning."]
+      },
+      {
+        "tag": "name",
+        "patterns": ["What's your name?", "Who are you?", "Are you a robot?"],
+        "responses": ["My name is ChatBot!", "I'm a chatbot, nice to meet you!", "I'm an AI model designed to help you."]
+      },
+      {
+        "tag": "feelings",
+        "patterns": ["How are you feeling?", "Are you okay?", "How's your day going?"],
+        "responses": ["I'm just a program, so I don't have feelings!", "I'm doing well, thank you.", "I'm always here to help, so my day is going pretty well!"]
+      },
+      {
+        "tag": "help",
+        "patterns": ["Can you help me?", "I need some assistance", "Can you assist me?"],
+        "responses": ["Of course, what do you need help with?", "Sure thing, I'm here to help.", "What can I assist you with?"]
+      },
+      {
+        "tag": "weather forecast",
+        "patterns": ["What's the weather like?", "Is it going to rain today?", "What's the forecast?"],
+        "responses": ["I'm sorry, I don't have access to live weather data.", "You can check the weather on your phone or computer.", "I'm not sure, but you can check a weather app for more information."]
+      },
+      {
+        "tag": "Assistant",
+        "patterns": ["Can you help me?", "I need help", "What can you do?", "Can you assist me?"],
+        "responses": ["Sure! How can I help you?", "Of course, what do you need help with?", "I can help you with a variety of tasks. What do you need assistance with?"]
+      },
+      {
+        "tag": "about",
+        "patterns": ["What are you?", "Who are you?", "Tell me about yourself", "What do you do?"],
+        "responses": ["I am a chatbot designed to assist you. You can ask me a variety of questions and I will do my best to help you.", "I am an AI-powered chatbot created to assist you. Feel free to ask me anything!", "I am a chatbot designed to help you with a variety of tasks."]
+      },
+      {
+        "tag": "Temperature",
+        "patterns": ["What's the weather like?", "What's the temperature?", "Is it raining?", "What's the forecast for today?"],
+        "responses": ["I'm sorry, I'm not able to provide weather information at this time.", "I'm not sure, would you like me to look up the weather for you?", "I'm not able to provide weather information. Is there anything else I can help you with?"]
+      },
+      {
+        "tag": "funny",
+        "patterns": ["Tell me a joke", "Make me laugh", "Do you know any jokes?"],
+        "responses": ["Why was the math book sad? Because it had too many problems.", "Why don't scientists trust atoms? Because they make up everything!", "Why did the tomato turn red? Because it saw the salad dressing!"]
+      },
+      {
+        "tag": "gossip",
+        "patterns": ["What's the latest news?", "What's happening in the world?", "Do you know any gossip?"],
+        "responses": ["I'm not able to provide news or gossip at this time. Is there anything else I can help you with?", "I'm sorry, I don't have any news or gossip to share right now.", "I'm not able to provide news or gossip. Can I help you with anything else?"]
+      },
+      {
+        "tag": "css_headings",
+        "patterns": ["How do I write CSS headings?","What is the syntax for CSS headings?","Can you show me an example of CSS headings?"],
+        "responses": [
+          "To write CSS headings, you can use the 'font-size' property with values such as 'h1', 'h2', 'h3', etc. Here's an example: h1 { font-size: 32px; }",
+          "The syntax for CSS headings involves selecting the heading element using its tag name (e.g. 'h1', 'h2') and applying the 'font-size' property to it. Here's an example: h2 { font-size: 24px; }",
+          "Sure! Here's an example of CSS headings: h3 { font-size: 18px; } You can modify the font size value to suit your needs."
+        ]
+      },
+      {
+        "tag": "css_heading",
+        "patterns": ["How do I style headings?", "How to make my headings look better?", "Can you help me with CSS headings?"],
+        "responses": ["Sure! To style headings, you can use CSS properties like font-family, font-size, font-weight, and color.", "There are many ways to style headings with CSS. Would you like me to show you some examples?", "I'd be happy to help with CSS headings. What specific styles are you looking to achieve?"]
+      },
+      {
+        "tag": "css_text",
+        "patterns": ["How do I change the color of text?", "How can I make my text bold?", "How do I align text in CSS?"],
+        "responses": ["To change the color of text, use the color property in CSS. To make text bold, use the font-weight property. And to align text, use the text-align property.", "Changing the color of text is easy with CSS. Here's an example: color: red;", "There are many ways to align text with CSS. Here's an example: text-align: center;"]
+      },
+      {
+        "tag": "css_background",
+        "patterns": ["How can I add a background color to my website?", "How do I set a background image in CSS?", "Can you show me how to make a gradient background in CSS?"],
+        "responses": ["To add a background color to your website, use the background-color property in CSS. To set a background image, use the background-image property. And to make a gradient background, use the background property with a linear-gradient value.", "Adding a background color to your website is simple with CSS. Here's an example: background-color: #f5f5f5;", "Setting a background image in CSS is easy. Here's an example: background-image: url('image.png');"]
+      },
+      {
+        "tag": "Box Model",
+        "patterns": [
+        "What is the box model in CSS?",
+        "How does the box model work?",
+        "Can you explain the CSS box model?"
+        ],
+        "responses": [
+        "The box model in CSS refers to the way elements are laid out on a webpage. It consists of content, padding, border, and margin.",
+        "The box model in CSS is a way of understanding how elements are positioned on a webpage. It helps developers create layouts that are visually appealing and easy to use.",
+        "The CSS box model is a fundamental concept that every web developer should understand. It determines the size and position of elements on a webpage."
+        ]
+      },
+      {
+        "tag": "Flexbox",
+        "patterns": [
+        "What is flexbox in CSS?",
+        "How does flexbox work?",
+        "Can you explain the CSS flexbox?"
+        ],
+        "responses": [
+        "Flexbox is a CSS layout module that makes it easier to create responsive web designs. It allows developers to create flexible and adaptive layouts that adjust to different screen sizes.",
+        "Flexbox is a powerful tool for web developers that helps them create dynamic and flexible layouts. It makes it easy to align and distribute elements on a webpage.",
+        "The CSS flexbox layout is a popular way of creating modern and responsive web designs. It is simple to use and allows developers to create complex layouts with ease."
+        ]
+      },
+      {
+        "tag": "Grid",
+        "patterns": [
+        "What is CSS grid?",
+        "How does CSS grid work?",
+        "Can you explain CSS grid?"
+        ],
+        "responses": [
+        "CSS grid is a powerful layout module that allows developers to create complex and dynamic grid layouts. It is an advanced tool for web design that enables developers to create responsive and visually appealing layouts.",
+        "CSS grid is a relatively new layout module that allows developers to create complex and dynamic grid layouts. It is designed to make it easier for developers to create responsive and visually appealing designs.",
+        "The CSS grid layout module is an advanced tool for web design that allows developers to create complex and dynamic grid layouts. It is a powerful tool that can help developers create modern and responsive web designs."
+        ]
+      },
+      {
+        "tag": "Responsive Design",
+        "patterns": [
+        "What is responsive design?",
+        "How does responsive design work?",
+        "Can you explain responsive design?"
+        ],
+        "responses": [
+        "Responsive design is an approach to web design that makes it easy to create websites that look great on any device. It involves creating designs that adapt to the size and resolution of the user's screen.",
+        "Responsive design is a popular approach to web design that helps developers create websites that look great on any device. It involves using techniques like fluid grids, flexible images, and media queries to create layouts that are responsive and adaptive.",
+        "Responsive design is an essential concept for web developers. It allows them to create websites that are easy to use and visually appealing on any device."
+        ]
+      },
+      {
+        "tag": "Selectors",
+          "patterns": [
+            "What are CSS selectors?",
+            "How do CSS selectors work?",
+            "Can you explain CSS selectors?"
+          ],
+          "responses": [
+            "CSS selectors are a way of targeting specific elements on a webpage. They allow developers to apply styles to specific elements based on their HTML structure, attributes, or content.",
+            "CSS selectors are a powerful tool for web developers. They allow them to target specific elements on a webpage and apply styles to them. There are many different types of selectors, including class selectors, ID selectors, attribute selectors, and more.",
+            "CSS selectors are an essential part of web development. They allow developers to create styles that apply to specific elements on a webpage and make it easier to create consistent and visually appealing designs."
+          ]
+      },
+      {
+        "tag": "CSS Border",
+          "patterns": [
+            "How do I add borders to elements in CSS?",
+            "What are the different border styles available in CSS?",
+            "How do I customize the border color in CSS?"
+          ],
+          "responses": [
+            "To add a border to an element, you can use the CSS border property. You can specify the style, width, and color of the border. For example: border: 1px solid black;",
+            "Some of the different border styles available in CSS include solid, dotted, dashed, and double.",
+            "To customize the border color in CSS, you can use the border-color property. For example: border-color: red;"
+          ]
+        },
+        {
+        "tag": "CSS Background",
+          "patterns": [
+            "How do I set the background color of an element in CSS?",
+            "What are the different types of background values in CSS?",
+            "How do I add an image as the background of an element in CSS?"
+          ],
+          "responses": [
+            "To set the background color of an element, you can use the CSS background-color property. For example: background-color: yellow;",
+            "Some of the different types of background values in CSS include color, image, and gradient.",
+            "To add an image as the background of an element, you can use the CSS background-image property. For example: background-image: url('image.jpg');"
+          ]
+        },
+        {
+         "tag": "CSS Box Model",
+          "patterns": [
+            "What is the CSS box model?",
+            "How do I calculate the total width of an element in CSS?",
+            "How do I add padding to an element in CSS?"
+          ],
+          "responses": [
+            "The CSS box model is a model that describes the layout of an element. It consists of four parts: content, padding, border, and margin.",
+            "To calculate the total width of an element in CSS, you need to add up the content width, padding, and border width. For example: width: 100px; padding: 10px; border: 2px solid black; total width = 100 + 10 + 2 * 2 = 116px;",
+            "To add padding to an element, you can use the CSS padding property. For example: padding: 20px;"
+          ]
+        },
+        {
+          "tag": "Obama",
+          "patterns": ["Who is Obama?"],
+          "responses": ["Barack Obama is the 44th President of the United States."]
+        },
+        {
+          "tag": "Children",
+          "patterns": ["Who are his children?"],
+          "responses": ["Barack Obama has two daughters named Malia and Sasha."]
+        },
+        {
+          "tag": "Default",
+          "patterns": [],
+          "responses": ["I'm sorry, I don't have the information about that question."]
+        },
+        {
+          "tag": "Sports",
+          "patterns": ["Who won the last Super Bowl?", "What's the score of the [team] game?", "Tell me about [athlete]."],
+          "responses": ["The Kansas City Chiefs won the last Super Bowl.", "The score of the [team] game is [score].", "[Athlete] is a professional [sport] player known for [achievement]."]
+        },
+        {
+          "tag": "Movies",
+          "patterns": ["Recommend a good movie.", "What's your favorite movie genre?", "Who directed [movie]?", "Tell me about [actor/actress]."],
+          "responses": ["I recommend watching [movie]. It's a [genre] movie with great reviews.", "I enjoy [genre] movies the most.", "[Movie] was directed by [director].", "[Actor/Actress] is a talented performer known for [notable works]."]
+        },
+        {
+          "tag": "Travel",
+          "patterns": ["What are some popular travel destinations?", "Tell me about [city/country].", "What's the best time to visit [place]?", "Recommend a budget-friendly travel destination."],
+          "responses": ["Some popular travel destinations include [destinations].", "[City/Country] is known for its [attractions] and [culture].", "The best time to visit [place] is during [season].", "I recommend visiting [destination] as a budget-friendly travel option."]
+        },
+        {
+          "tag": "Food",
+          "patterns": ["What's your favorite cuisine?", "Recommend a good restaurant in [city].", "How do I make [dish]?", "Tell me about [ingredient]."],
+          "responses": ["I enjoy [cuisine] cuisine the most.", "I recommend trying [restaurant] in [city]. They serve delicious [cuisine] food.", "To make [dish], you'll need [ingredients] and follow these steps: [recipe].", "[Ingredient] is a common ingredient used in [cuisine] cooking known for its [characteristics]."]
+        },
+        {
+          "tag": "Restaurant",
+          "patterns": ["Find me a [cuisine] restaurant in [city]."],
+          "responses": ["Sure, I can help you with that. What is your preferred price range?"]
+        },
+        {
+          "tag": "PriceRange",
+          "patterns": ["I prefer [price_range] price range."],
+          "responses": ["Great! Here are some [cuisine] restaurants in [city] within the [price_range] price range: [restaurant1], [restaurant2], [restaurant3]."]
+        },
+        {
+          "tag": "TravelDestination",
+          "patterns": ["I want to travel to [destination_type]."],
+          "responses": ["That sounds exciting! How long do you plan to stay there?"]
+        },
+        {
+          "tag": "Duration",
+          "patterns": ["I will be staying for [duration]."],
+          "responses": ["Perfect! Here are some recommended activities you can do during your [duration] stay in [destination_type]: [activity1], [activity2], [activity3]."]
+        },
+        {
+          "tag": "Weather",
+          "patterns": ["What is the weather like in [city] today?"],
+          "responses": ["The current weather in [city] is [weather_condition]. Would you like the forecast for tomorrow?"]
+        },
+        {
+          "tag": "WeatherForecast",
+          "patterns": ["Yes, please."],
+          "responses": ["Tomorrow's forecast in [city] shows [weather_forecast]."]
+        },
+        {
+          "tag": "Shopping",
+          "patterns": ["I want to buy [product]."],
+          "responses": ["Sure! Do you have a specific budget in mind?"]
+        },
+        {
+          "tag": "Budget",
+          "patterns": ["My budget is [budget_amount]."],
+          "responses": ["Great! Here are some options for [product] within your budget: [option1], [option2], [option3]."]
+        },
+        {
+          "tag": "FlightBooking",
+          "patterns": ["I want to book a flight from [origin] to [destination]."],
+          "responses": ["Sure, when would you like to depart?"]
+        },
+        {
+          "tag": "DepartureDate",
+          "patterns": ["I plan to depart on [date]."],
+          "responses": ["Got it! How many passengers will be traveling with you?"]
+        },
+        {
+          "tag": "Restaurant",
+          "patterns": ["Find me a [cuisine] restaurant in [city]."],
+          "responses": ["Sure, I can help you with that. What is your preferred price range?"]
+        },
+        {
+          "tag": "PriceRange",
+          "patterns": ["I prefer [price_range] price range."],
+          "responses": ["Great! Here are some [cuisine] restaurants in [city] within the [price_range] price range: [restaurant1], [restaurant2], [restaurant3]."]
+        },
+        {
+          "tag": "TravelDestination",
+          "patterns": ["I want to travel to [destination_type]."],
+          "responses": ["That sounds exciting! How long do you plan to stay there?"]
+        },
+        {
+          "tag": "Duration",
+          "patterns": ["I will be staying for [duration]."],
+          "responses": ["Perfect! Here are some recommended activities you can do during your [duration] stay in [destination_type]: [activity1], [activity2], [activity3]."]
+        },
+        {
+          "tag": "Book",
+          "patterns": ["I want to book a [service_type] on [date]."],
+          "responses": ["Sure, I can assist you with that. How many people will be joining?"]
+        },
+        {
+          "tag": "GuestCount",
+          "patterns": ["There will be [guest_count] people."],
+          "responses": ["Got it! Please wait while I check the availability for [service_type] on [date] for [guest_count] people."]
+        },
+        {
+          "tag": "Confirmation",
+          "patterns": ["Yes, that works for me."],
+          "responses": ["Great! Your booking for [service_type] on [date] for [guest_count] people has been confirmed."]
+        },
+        {
+          "tag": "FlightBooking",
+          "patterns": ["I want to book a flight from [departure_city] to [destination_city] on [travel_date]."],
+          "responses": ["Sure, I can help you with that. What is your preferred class?"]
+        },
+        {
+          "tag": "ClassPreference",
+          "patterns": ["I prefer [class_preference] class."],
+          "responses": ["Noted! Let me check the available flights from [departure_city] to [destination_city] on [travel_date] in [class_preference] class."]
+        },
+        {
+          "tag": "FlightConfirmation",
+          "patterns": ["Yes, that sounds good."],
+          "responses": ["Perfect! Your flight from [departure_city] to [destination_city] on [travel_date] in [class_preference] class has been booked."]
+        },
+        {
+          "tag": "ProductInquiry",
+          "patterns": ["Tell me more about the [product_type]."],
+          "responses": ["Certainly! The [product_type] is a [description]. It offers [features] and is available in [variations]."]
+        },
+        {
+          "tag": "VariationSelection",
+          "patterns": ["I am interested in the [variation]."],
+          "responses": ["Great choice! The [variation] is [price]. Would you like to proceed with the purchase?"]
+        },
+        {
+          "tag": "PurchaseConfirmation",
+          "patterns": ["Yes, I would like to purchase it."],
+          "responses": ["Excellent! Please provide your shipping address and payment details to complete the purchase."]
+        },
+        {
+          "tag": "RecipeSearch",
+          "patterns": ["Find me a recipe for [dish]."],
+          "responses": ["Sure! Let me search for a delicious recipe for [dish]. How much time do you have for cooking?"]
+        },
+        {
+          "tag": "CookingTime",
+          "patterns": ["I have [time] minutes for cooking."],
+          "responses": ["Noted! Here's a tasty recipe for [dish] that can be prepared in [time] minutes. Enjoy your meal!"]
+        },
+        {
+          "tag": "WeatherForecast",
+          "patterns": ["What is the weather forecast for [location] tomorrow?"],
+          "responses": ["Let me check the weather forecast for [location] tomorrow. Please wait a moment."]
+        },
+        {
+          "tag": "WeatherResponse",
+          "patterns": ["The weather will be [weather_condition] with a temperature of [temperature]."],
+          "responses": ["Thank you for waiting! The weather in [location] tomorrow will be [weather_condition] with a temperature of [temperature]."]
+        },
+        {
+          "tag": "BookRecommendation",
+          "patterns": ["Can you recommend a good [genre] book?"],
+          "responses": ["Of course! I have a great recommendation for you. How about reading [book_title]? It's a [genre] book that has received excellent reviews."]
+        },
+        {
+          "tag": "BookConfirmation",
+          "patterns": ["Yes, I'd love to read [book_title]."],
+          "responses": ["That's wonderful! [book_title] is a fantastic choice. Would you like me to provide you with the purchase options?"]
+        },
+        {
+          "tag": "PurchaseOptions",
+          "patterns": ["Yes, please provide the purchase options."],
+          "responses": ["Certainly! You can purchase [book_title] in both paperback and e-book formats. Which format would you prefer?"]
+        },
+        {
+          "tag": "FormatSelection",
+          "patterns": ["I prefer the [format] format."],
+          "responses": ["Great! [book_title] is available in [format] format. You can find it on popular online bookstores or visit your local bookstore."]
+        },
+        {
+          "tag": "MovieRecommendation",
+          "patterns": ["Suggest a good [genre] movie for me."],
+          "responses": ["Sure! I have an excellent recommendation for you. How about watching [movie_title]? It's a [genre] movie with captivating storytelling and stunning visuals."]
+        },
+        {
+          "tag": "MovieConfirmation",
+          "patterns": ["Yes, I'd like to watch [movie_title]."],
+          "responses": ["That's fantastic! [movie_title] is a brilliant choice. Do you prefer watching it in a theater or streaming it online?"]
+        },
+        {
+          "tag": "TheaterSelection",
+          "patterns": ["I'd like to watch it in a theater."],
+          "responses": ["Great! [movie_title] is currently playing in several theaters near you. Enjoy the movie-going experience!"]
+        },
+        {
+          "tag": "StreamingSelection",
+          "patterns": ["I prefer streaming it online."],
+          "responses": ["Perfect! [movie_title] is available on popular streaming platforms like Netflix and Amazon Prime. Grab your popcorn and enjoy the movie from the comfort of your home!"]
+        },
+        {
+          "tag": "Introduction",
+          "patterns": ["Hi, I'm [name]. I'm looking for a perfect match."],
+          "responses": ["Hello, [name]! Nice to meet you. I can assist you in finding your perfect match. What qualities do you value in a partner?"]
+        },
+        {
+          "tag": "Qualities",
+          "patterns": ["I value [qualities] in a partner."],
+          "responses": ["That's great! [qualities] are essential in building a strong and healthy relationship. Are there any specific interests or hobbies you'd like your partner to have?"]
+        },
+        {
+          "tag": "Interests",
+          "patterns": ["I'd like my partner to have an interest in [interests]."],
+          "responses": ["Excellent choice! Having shared interests can foster a deeper connection. How about the level of education or career aspirations? Do those factors matter to you?"]
+        },
+        {
+          "tag": "EducationAndCareer",
+          "patterns": ["I prefer someone with a [education] education and ambitious career goals."],
+          "responses": ["Understood! Ambition and intellectual compatibility can be important factors. What about physical attributes or appearance preferences?"]
+        },
+        {
+          "tag": "PhysicalAttributes",
+          "patterns": ["I have preferences for [physical_attributes]."],
+          "responses": ["Got it! Physical attraction is important. Finally, do you have any geographic preferences? Are you open to a long-distance relationship?"]
+        },
+        {
+          "tag": "GeographicPreference",
+          "patterns": ["I prefer someone who is [geographic_preference]."],
+          "responses": ["Noted! Geographic compatibility can play a role in a successful relationship. Based on your preferences, I will search for potential matches. Please wait a moment."]
+        },
+        {
+          "tag": "MatchSearch",
+          "patterns": ["Alright, I found some potential matches for you. Here are their profiles: [profile1], [profile2], [profile3]."],
+          "responses": ["Take your time to review the profiles and let me know if you'd like more information about any of them or if you have any other preferences."]
+        },
+        {
+          "tag": "AdditionalPreferences",
+          "patterns": ["I'm interested in knowing more about [profile]."],
+          "responses": ["Sure! Let me provide you with more details about [profile]. [Profile details]. If you'd like to connect with [profile], I can help facilitate the introduction."]
+        },
+        {
+          "tag": "ConnectionRequest",
+          "patterns": ["Yes, I'd like to connect with [profile]."],
+          "responses": ["Great! I'll notify [profile] about your interest and arrange an introduction. Good luck in your journey of finding your perfect match! If you have any further questions, feel free to ask."]
+        },
+        {
+          "tag": "Introduction",
+          "patterns": ["Hi, I'm [name]. I need help choosing a course for my profession."],
+          "responses": ["Hello, [name]! I'm here to assist you in choosing the right course for your profession. Can you provide me with some details about your current profession and your career goals?"]
+        },
+        {
+          "tag": "ProfessionDetails",
+          "patterns": ["I'm currently working as a [current_profession]. My career goal is to become a [desired_profession]."],
+          "responses": ["That's great! Understanding your current profession and desired career path is crucial. What specific skills or knowledge do you think would be beneficial for your desired profession?"]
+        },
+        {
+          "tag": "SkillsAndKnowledge",
+          "patterns": ["I believe [skills] and [knowledge] would be valuable for my desired profession."],
+          "responses": ["Excellent! Identifying the necessary skills and knowledge is an important step. Are there any particular areas or specializations within your desired profession that interest you?"]
+        },
+        {
+          "tag": "AreasOfInterest",
+          "patterns": ["I'm interested in [areas_of_interest]."],
+          "responses": ["Great choice! Exploring specific areas of interest can help you narrow down your course options. Have you considered any specific duration or format for the course?"]
+        },
+        {
+          "tag": "CourseDurationAndFormat",
+          "patterns": ["I'm looking for a [course_duration] course in [course_format] format."],
+          "responses": ["Understood! Considering the duration and format will help you find a course that fits your preferences. Finally, do you have any geographic preferences for the course?"]
+        },
+        {
+          "tag": "GeographicPreference",
+          "patterns": ["I prefer a course located in [geographic_preference]."],
+          "responses": ["Noted! Geographic preferences can be taken into account when searching for suitable courses. Based on your inputs, I will look for relevant course options. Please wait a moment."]
+        },
+        {
+          "tag": "CourseSearch",
+          "patterns": ["Alright, I found some potential courses for you. Here are their details: [course1], [course2], [course3]."],
+          "responses": ["Take your time to review the course details and let me know if you'd like more information about any of them or if you have any other preferences."]
+        },
+        {
+          "tag": "AdditionalPreferences",
+          "patterns": ["I'm interested in knowing more about [course]."],
+          "responses": ["Sure! Let me provide you with more details about [course]. [Course details]. If you'd like to enroll in [course], I can guide you through the registration process."]
+        },
+        {
+          "tag": "EnrollmentRequest",
+          "patterns": ["Yes, I'd like to enroll in [course]."],
+          "responses": ["Great! I'll provide you with the necessary steps to enroll in [course]. Good luck in your journey of acquiring new skills and knowledge! If you have any further questions, feel free to ask."]
+        }
+    ]
+}

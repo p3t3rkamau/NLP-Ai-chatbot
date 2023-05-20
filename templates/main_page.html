@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Some Page</title>
+    <style>
+        body{
+            max-height: 20vh;
+        }
+        
+      .footer {
+        z-index: 1;
+        --footer-background: #695f60;
+        display: grid;
+        position: fixed;
+        grid-area: footer;
+        min-height: 12rem;
+        bottom: 5px;
+        width: 99%;
+        
+      }
+      
+      .footer .bubbles {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: .2rem;
+        background: var(--footer-background);
+        filter: url("#blob");
+      }
+      
+      .footer .bubbles .bubble {
+        position: absolute;
+        left: var(--position, 50%);
+        background: var(--footer-background);
+        border-radius: 100%;
+        animation: bubble-size var(--time, 4s) ease-in infinite var(--delay, 0s),
+                   bubble-move var(--time, 4s) ease-in infinite var(--delay, 0s);
+        transform: translate(-50%, 100%);
+      }
+      
+      .footer .content {
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-gap: 4rem;
+        padding: 2rem;
+        background: var(--footer-background);
+      }
+      
+      .footer .content a,
+      .footer .content p {
+        color: #F5F7FA;
+        text-decoration: none;
+      }
+      
+      .footer .content b {
+        color: white;
+      }
+      
+      .footer .content p {
+        margin: 0;
+        font-size: 0.75rem;
+      }
+      
+      .footer .content > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      
+      .footer .content > div > div {
+        margin: 0.25rem 0;
+      }
+      
+      .footer .content > div > div > * {
+        margin-right: 0.5rem;
+      }
+      
+      .footer .content .image {
+        align-self: center;
+        width: 4rem;
+        height: 4rem;
+        margin: 0.25rem 0;
+        background-size: cover;
+        background-position: center;
+      }
+      
+      @keyframes bubble-size {
+        0%, 75% {
+          width: var(--size, 2rem);
+          height: var(--size, 2rem);
+        }
+        100% {
+          width: 0rem;
+          height: 0rem;
+        }
+      }
+      
+      @keyframes bubble-move {
+        0% {
+          bottom: -2rem;
+        }
+        100% {
+          bottom: var(--distance, 8rem);
+        }
+      }
+      
+    
+    
+    </style>
+  </head>
+  <body>
+  
+        <h1>About The Code</h1>
+Flask is a Python web framework that allows building web applications easily.
+render_template is a function that is used to render HTML templates in Flask.
+request is a Flask module that provides the request object, which contains information about the incoming HTTP request.
+jsonify is a Flask module that helps create JSON responses.
+Create a Flask application:
+
+app = Flask(__name__) creates a new Flask application.
+Define the API key:
+
+valid_api_keys = 'api_key_1' is the API key that is used to authenticate requests.
+Define a route for the homepage:
+
+@app.route('/') is a decorator that associates the function below it with the URL of the root directory.
+def index(): is the function that will be executed when the root directory is accessed.
+return render_template('index.html') renders the index.html file as the response to the client.
+Define a route for the chatbot:
+
+@app.route('/chatbot', methods=['POST']) associates the function below it with the URL /chatbot and allows only POST requests.
+def chatbot(): is the function that will be executed when the /chatbot URL is accessed.
+user_message = request.form['user_message'] retrieves the user's message from the form data submitted via the POST request.
+payload = {"user_message": user_message} creates a JSON object with the user's message.
+response = requests.post(url, headers={'api_key': valid_api_keys}, json=payload) sends a POST request to the specified API endpoint URL with the user's message and the API key as headers.
+chatbot_response = response.json()["chatbot_response"] extracts the chatbot's response from the JSON response.
+return render_template('index.html', chatbot_response=chatbot_response) renders the index.html file with the chatbot's response as a parameter.
+Start the Flask application:
+
+if __name__ == '__main__': checks if the script is being run directly.
+app.run(debug=True, port=5001) 
+starts the Flask application on port 5001 with debug mode enabled.
+    </pre>
+   
+    
+    <footer >
+        <div class="main">
+          <div class="footer">
+            <div class="bubbles">
+              <!-- Loop 128 times and create a bubble each time -->
+              <!-- Set random values for each bubble's size, distance, position, time, and delay using inline styles -->
+              <!-- Use CSS custom properties to control the random values -->
+              <!-- Note: the "style" attribute is in backticks (``) and includes interpolation ${} for dynamic values -->
+            
+  
+             
+            </div>
+            <div class="content">
+              <div>
+                <div>
+                  <b>Eldew</b>
+                  <a href="#">Secuce</a>
+                  <a href="#">Drupand</a>
+                  <a href="#">Oceash</a>
+                  <a href="#">Ugefe</a>
+                  <a href="#">Babed</a>
+                </div>
+                <div>
+                  <b>Spotha</b>
+                  <a href="#">Miskasa</a>
+                  <a href="#">Agithe</a>
+                  <a href="#">Scesha</a>
+                  <a href="#">Lulle</a>
+                </div>
+                <div>
+                  <b>Chashakib</b>
+                  <a href="#">Chogauw</a>
+                  <a href="#">Phachuled</a>
+                  <a href="#">Tiebeft</a>
+                  <a href="#">Ocid</a>
+                  <a href="#">Izom</a>
+                  <a href="#">Ort</a>
+                </div>
+                <div>
+                  <b>Athod</b>
+                  <a href="#">Pamuz</a>
+                  <a href="#">Vapert</a>
+                  <a href="#">Neesk</a>
+                  <a href="#">Omemanen</a>
+                </div>
+              </div>
+              <div>
+                <a class="image" style="background-image: url('/images/download.gif')"></a>
+               
+  
+                <p>©2023 BunnieLLC</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <svg style="position: fixed; top: 100vh;">
+          <defs>
+            <filter id="blob">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+              <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="blob"/>
+              <!-- <feComposite in="SourceGraphic" in2="blob" operator="atop"/> -->
+               <!-- This line is commented out -->
+            </filter>
+          </defs>
+        </svg>
+        
+      </footer>
+  </body>
+</html>
