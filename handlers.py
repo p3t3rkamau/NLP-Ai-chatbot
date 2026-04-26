@@ -1,14 +1,15 @@
-"""
-handlers.py - Specialized command handlers
-"""
+"""Specialized command handlers."""
 
+import ipaddress
 import os
 import random
+from urllib.parse import urlparse
 import requests
 import wikipedia
 import psutil
-import webbrowser
 from bs4 import BeautifulSoup
+from flask_login import current_user
+from markupsafe import escape
 from config import UNSPLASH_ACCESS_KEY, API_KEY_FILE
 from logging_utils import remember_name, recall_name
 
@@ -18,36 +19,55 @@ def beast_mode(query: str) -> str:
     try:
         import openai
         if os.path.isfile(API_KEY_FILE):
-            with open(API_KEY_FILE) as f:
+            with open(API_KEY_FILE, encoding="utf-8") as f:
                 openai.api_key = f.read().strip()
         response = openai.Completion.create(
             engine="text-davinci-002", prompt=f"User: {query}\nChatbot:", max_tokens=100
         )
         return response.choices[0].text.strip()
-    except Exception as e:
-        return f"Beast mode unavailable: {e}"
+    except Exception:
+        return "Beast mode is currently unavailable."
 
 
 def update_api_key(new_key: str) -> str:
-    """Update the OpenAI API key."""
-    with open(API_KEY_FILE, "w") as f:
+    """Update the OpenAI API key (admin only)."""
+    if not current_user.is_authenticated:
+        return "Only authenticated admins can update API keys."
+    with open(API_KEY_FILE, "w", encoding="utf-8") as f:
         f.write(new_key)
-    return "API key updated successfully!"
+    return "API key updated successfully."
+
+
+def _is_private_host(hostname: str) -> bool:
+    if not hostname:
+        return True
+    if hostname in {"localhost", "127.0.0.1", "::1"}:
+        return True
+    try:
+        ip = ipaddress.ip_address(hostname)
+        return ip.is_private or ip.is_loopback or ip.is_link_local or ip.is_reserved
+    except ValueError:
+        return False
 
 
 def get_website_content(user_message: str) -> str:
-    """Fetch and return website content."""
+    """Fetch and return website content with SSRF protection."""
     url = user_message.lower().replace("get website content", "").strip()
+    parsed = urlparse(url)
+    if parsed.scheme not in {"http", "https"}:
+        return "Only http/https URLs are allowed."
+    if _is_private_host(parsed.hostname or ""):
+        return "That URL is not allowed."
+
     try:
-        resp = requests.get(url, timeout=10)
+        resp = requests.get(url, timeout=10, allow_redirects=False)
         soup = BeautifulSoup(resp.content, "html.parser")
-        return soup.get_text()[:2000]  # cap output
-    except Exception as e:
-        return f"Could not fetch content: {e}"
+        return escape(soup.get_text()[:2000])
+    except Exception:
+        return "Could not fetch website content."
 
 
 def wikipedia_lookup(person: str) -> str:
-    """Look up a person on Wikipedia."""
     try:
         return wikipedia.summary(person, sentences=3)
     except wikipedia.exceptions.DisambiguationError as e:
@@ -57,7 +77,6 @@ def wikipedia_lookup(person: str) -> str:
 
 
 def get_battery_status() -> str:
-    """Get the device battery status."""
     battery = psutil.sensors_battery()
     if battery:
         return f"Your battery is at {battery.percent:.0f}%."
@@ -65,61 +84,43 @@ def get_battery_status() -> str:
 
 
 def get_name_response(name: str) -> str:
-    """Remember and confirm user's name."""
-    remember_name(name)
-    return f"Got it! I'll remember that your name is {name}. 👍"
+    safe_name = escape(name)
+    remember_name(str(safe_name))
+    return f"Got it! I'll remember that your name is {safe_name}. 👍"
 
 
 def recall_user_name() -> str:
-    """Recall the user's stored name."""
     name = recall_name()
     if name:
-        return f"Your name is {name}!"
+        return f"Your name is {escape(name)}!"
     return "I don't have your name saved yet. Tell me with 'remember my name is ...'."
 
 
 def get_capabilities() -> str:
-    """Return list of chatbot capabilities."""
     return (
         "Here's what I can do:\n"
-        "• Answer questions using a trained intent model\n"
-        "• Search Google for you\n"
-        "• Look up people on Wikipedia\n"
-        "• Remember and recall your name\n"
-        "• Tell you the current time and battery level\n"
-        "• Fetch text content from websites\n"
-        "• Show pictures from Unsplash\n"
-        "• Generate code snippets\n"
-        "• Run OpenAI completions in 'beast mode'\n"
-        "• Manage conversation history"
+        "• Answer questions with intents + semantic matching\n"
+        "• Use an LLM fallback for open-ended chats\n"
+        "• Search Google, Wikipedia, and images\n"
+        "• Remember your name and show battery/time"
     )
 
 
 def get_code_snippet(query: str) -> str:
-    """Return code snippets for common patterns."""
     snippets = {
-        "center": (
-            "HTML:\n```html\n<div class='centered'>Content</div>\n```\n"
-            "CSS:\n```css\n.centered { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }\n```"
-        ),
-        "responsive navbar": (
-            "```css\n#navbar { display:flex; flex-wrap:wrap; justify-content:space-between; }\n"
-            "#navbar ul { display:flex; flex-direction:column; }\n#navbar li { padding:1rem; }\n```"
-        ),
-        "slider": (
-            "```css\n.slider { max-width:100%; position:relative; }\n"
-            ".slider img { width:100%; }\n"
-            ".slider .prev,.slider .next { position:absolute; top:50%; transform:translateY(-50%); }\n```"
-        ),
+        "center": "Use flexbox: .container{display:flex;justify-content:center;align-items:center;}",
+        "responsive navbar": "Use media queries + flex-wrap for nav items.",
+        "slider": "Use overflow hidden and transform translateX for slides.",
     }
     for key, val in snippets.items():
         if key in query:
             return val
-    return "No code snippet found for that query. Try 'center', 'responsive navbar', or 'slider'."
+    return "No code snippet found for that query."
 
 
 def fetch_unsplash_image(search_term: str) -> str:
-    """Fetch images from Unsplash API."""
+    if not UNSPLASH_ACCESS_KEY:
+        return "Image search is not configured."
     try:
         resp = requests.get(
             "https://api.unsplash.com/search/photos/",
@@ -130,15 +131,14 @@ def fetch_unsplash_image(search_term: str) -> str:
         results = resp.json().get("results", [])
         if not results:
             return "I couldn't find any pictures for that."
-        urls = [r["urls"]["regular"] for r in results]
+        urls = [escape(r["urls"]["regular"]) for r in results]
         tags = "".join(f'<img src="{u}" style="max-width:100%;margin:4px 0;" />' for u in urls)
-        return f"Here are some pictures of {search_term}: {tags}"
-    except Exception as e:
-        return f"Image search failed: {e}"
+        return f"Here are some pictures of {escape(search_term)}: {tags}"
+    except Exception:
+        return "Image search failed."
 
 
 def play_rock_paper_scissors(player_choice: str) -> str:
-    """Play a round of rock-paper-scissors."""
     choices = ["rock", "paper", "scissors"]
     if player_choice not in choices:
         return "Choose rock, paper, or scissors."
@@ -146,7 +146,4 @@ def play_rock_paper_scissors(player_choice: str) -> str:
     wins = {("rock", "scissors"), ("paper", "rock"), ("scissors", "paper")}
     if player_choice == computer:
         return "It's a draw! 🤝"
-    elif (player_choice, computer) in wins:
-        return "You win! 🎉"
-    else:
-        return "Computer wins! 🤖"
+    return "You win! 🎉" if (player_choice, computer) in wins else "Computer wins! 🤖"

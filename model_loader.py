@@ -17,7 +17,17 @@ with open(INTENTS_FILE, "r") as f:
 # Load model checkpoint
 _data = torch.load(MODEL_FILE, map_location=device)
 _model = NeuralNet(_data["input_size"], _data["hidden_size"], _data["output_size"]).to(device)
-_model.load_state_dict(_data["model_state"])
+state = _data["model_state"]
+if "l1.weight" in state:
+    state = {
+        "network.0.weight": state["l1.weight"],
+        "network.0.bias": state["l1.bias"],
+        "network.2.weight": state["l2.weight"],
+        "network.2.bias": state["l2.bias"],
+        "network.4.weight": state["l3.weight"],
+        "network.4.bias": state["l3.bias"],
+    }
+_model.load_state_dict(state, strict=False)
 _model.eval()
 
 # Extract model metadata

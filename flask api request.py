@@ -6,12 +6,13 @@ Run AFTER app.py is already running on port 5000:
 """
 
 from flask import Flask, render_template, request
+import os
 import requests
 
 app = Flask(__name__)
 
 API_URL    = "http://localhost:5000/api/chat"
-API_KEY    = "api_key_1"          # must be in app.py's VALID_API_KEYS
+API_KEY    = os.environ.get("CHATBOT_API_KEY", "")
 TIMEOUT    = 10                   # seconds
 
 
