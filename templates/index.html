@@ -58,6 +58,7 @@
                         <p>{{ error_message }}</p>
                     {% endif %}
                     <form method="POST" action="{{ url_for('misc.game') }}">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <p>Choose rock, paper, or scissors:</p>
                         <input type="text" name="player_choice">
                         <input type="submit" value="Play">
@@ -76,6 +77,7 @@
             
             <div class="user-input-container">
               <form id="chat-form" method="POST" action="{{ url_for('chat.chat') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div id="suggested-words"></div>
                 
                 <button type="button" class="send-message-btn" onclick="startDictation()">Speak</button>
