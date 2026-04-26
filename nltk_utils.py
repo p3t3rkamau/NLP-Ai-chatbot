@@ -1,44 +1,45 @@
+"""
+nltk_utils.py - NLP preprocessing utilities
+"""
+
 import numpy as np
 import nltk
-# nltk.download('punkt')
 from nltk.stem.porter import PorterStemmer
-stemmer = PorterStemmer()
+
+# Uncomment once to download the tokenizer data:
+# nltk.download('punkt')
+
+_stemmer = PorterStemmer()
 
 
-def tokenize(sentence):
-    """
-    split sentence into array of words/tokens
-    a token can be a word or punctuation character, or number
-    """
+def tokenize(sentence: str) -> list[str]:
+    """Split a sentence into word/punctuation tokens."""
     return nltk.word_tokenize(sentence)
 
 
-def stem(word):
-    """
-    stemming = find the root form of the word
-    examples:
-    words = ["organize", "organizes", "organizing"]
-    words = [stem(w) for w in words]
-    -> ["organ", "organ", "organ"]
-    """
-    return stemmer.stem(word.lower())
+def stem(word: str) -> str:
+    """Return the Porter-stemmed lowercase root of a word."""
+    return _stemmer.stem(word.lower())
 
 
-def bag_of_words(tokenized_sentence, words):
+def bag_of_words(tokenized_sentence: list[str], vocabulary: list[str]) -> np.ndarray:
     """
-    return bag of words array:
-    1 for each known word that exists in the sentence, 0 otherwise
-    example:
-    sentence = ["hello", "how", "are", "you"]
-    words = ["hi", "hello", "I", "you", "bye", "thank", "cool"]
-    bog   = [  0 ,    1 ,    0 ,   1 ,    0 ,    0 ,      0]
-    """
-    # stem each word
-    sentence_words = [stem(word) for word in tokenized_sentence]
-    # initialize bag with 0 for each word
-    bag = np.zeros(len(words), dtype=np.float32)
-    for idx, w in enumerate(words):
-        if w in sentence_words: 
-            bag[idx] = 1
+    Build a binary bag-of-words vector.
 
-    return bag
+    Args:
+        tokenized_sentence: List of tokens from the user input.
+        vocabulary:         Full sorted vocabulary from training.
+
+    Returns:
+        Float32 numpy array of shape (len(vocabulary),) with 1s for present words.
+
+    Example:
+        sentence  = ["hello", "how", "are", "you"]
+        vocabulary = ["hi", "hello", "I", "you", "bye", "thank", "cool"]
+        result    = [0, 1, 0, 1, 0, 0, 0]
+    """
+    stemmed = {stem(w) for w in tokenized_sentence}
+    return np.array(
+        [1.0 if w in stemmed else 0.0 for w in vocabulary],
+        dtype=np.float32,
+    )

@@ -57,7 +57,7 @@
                     {% if error_message %}
                         <p>{{ error_message }}</p>
                     {% endif %}
-                    <form method="POST" action="{{ url_for('game') }}">
+                    <form method="POST" action="{{ url_for('misc.game') }}">
                         <p>Choose rock, paper, or scissors:</p>
                         <input type="text" name="player_choice">
                         <input type="submit" value="Play">
@@ -75,7 +75,7 @@
             
             
             <div class="user-input-container">
-              <form id="chat-form" method="POST" action="{{ url_for('chat') }}">
+              <form id="chat-form" method="POST" action="{{ url_for('chat.chat') }}">
                 <div id="suggested-words"></div>
                 
                 <button type="button" class="send-message-btn" onclick="startDictation()">Speak</button>
@@ -85,7 +85,7 @@
             
 
               
-              <form action="{{ url_for('clear') }}">
+              <form action="{{ url_for('misc.clear') }}">
                 <button id="clearBtn" class="clear-btn">Clear</button>
               </form>
              
@@ -239,102 +239,6 @@ function copyToClipboard(text) {
 </body>
 </html>
 
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Chatbot Demo</title>
-    
-</head>
-<body>
-    <div class="chat-container">
-        <div class="chat-header">
-            <h1>Chatbot Demo</h1>
-        </div>
-        <div class="chat-log" id="chat-log">
-            
-        </div>
-        <div class="chat-input">
-            <form id="chat-form" method="POST" action="{{ url_for('chat') }}">
-                <input type="text" name="user_message" id="user-message" placeholder="Type your message...">
-                <div class="message-row chatbot">
-                    <div class="message chatbot">
-                        <span class="message-text" id="chatbotResponse">{{ chatbot_response }}</span>
-                    </div>
-                </div>
-                <button type="submit">Send</button>
-            </form>
-        </div>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-    const userInputElement = document.getElementById('user-input');
-    const chatLogElement = document.getElementById('chat-log');
-    const sendButtonElement = document.getElementById('submit');
-    const chatFormElement = document.getElementById('chat-form');
-    const chatUrl = '/chat';
-
-    sendButtonElement.addEventListener('click', () => {
-        sendMessage();
-    });
-
-    chatFormElement.addEventListener('submit', (event) => {
-        event.preventDefault(); 
-                sendMessage();
-    });
-
-    function sendMessage() {
-        const userMessage = userInputElement.value.trim();
-        if (userMessage === '') {
-            return;
-        }
-
-        appendMessage('user', userMessage);
-        userInputElement.value = '';
-
-        fetch('/chat', {
-            method: 'POST',
-            body: new FormData(chatFormElement)
-        })
-        .then(response => response.json())
-        .then(data => {
-            const chatbotResponse = data['chatbot_response'];
-            appendMessage('chatbot', chatbotResponse);
-        });
-    }
-
-    function appendMessage(sender, message) {
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('message', sender);
-        messageElement.textContent = message;
-        chatLogElement.appendChild(messageElement);
-    }
-});
-
-    </script>
-</body>
-</html> -->
-
-
-
-<!-- 
-  <!DOCTYPE html>
-  <html>
-  <head>
-      <title>Chatbot</title>
-      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
-  </head>
-  <body>
-      <h1>Chatbot</h1>
-      <form method="POST" action="/chat">
-          <label for="user_message">User Message:</label>
-          <input type="text" id="user_message" name="user_message" required>
-          <button type="submit">Send</button>
-      </form>
-      <h2>Chatbot Response:</h2>
-      <p>{{ chatbot_response }}</p>
-  </body>
-  </html> -->
-  
 <!-- <!DOCTYPE html>
 <html>
   <head>

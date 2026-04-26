@@ -18,3 +18,83 @@
 2023-05-20 22:25:12.068649 - Chatbot: Hi there!
 2023-05-20 22:25:19.785334 - User: ddddd
 2023-05-20 22:25:19.785334 - Chatbot: I'm sorry, I didn't understand that. Can you please try again?
+2026-04-21 06:04:47.336312 - User: hello
+2026-04-21 06:04:47.370027 - Chatbot: I'm doing well, thank you.
+2026-04-21 06:04:47.371013 - Chatbot: Hello!
+2026-04-21 06:05:49.198787 - User: how are you
+2026-04-21 06:05:49.199787 - Chatbot: I'm doing well, thank you.
+2026-04-21 06:06:14.228871 - error: 
+**********************************************************************
+  Resource 'punkt_tab' not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  >>> import nltk
+  >>> nltk.download('punkt_tab')
+
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load 'tokenizers/punkt_tab/english/'
+
+  Searched in:
+    - 'C:\\Users\\PETER/nltk_data'
+    - 'F:\\projects\\NLP-Ai-chatbot\\venv\\nltk_data'
+    - 'F:\\projects\\NLP-Ai-chatbot\\venv\\share\\nltk_data'
+    - 'F:\\projects\\NLP-Ai-chatbot\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\PETER\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
+2026-04-21 06:06:43.413067 - User: hello
+2026-04-21 06:06:43.414047 - Chatbot: Hello!
+2026-04-21 06:06:56.632351 - User: how are you
+2026-04-21 06:06:56.632351 - Chatbot: Hi there!
+2026-04-21 06:06:57.492060 - User: how are you
+2026-04-21 06:06:57.502209 - Chatbot: I'm doing well, thank you.
+2026-04-21 06:07:42.997057 - error: 
+**********************************************************************
+  Resource 'punkt_tab' not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  >>> import nltk
+  >>> nltk.download('punkt_tab')
+
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load 'tokenizers/punkt_tab/english/'
+
+  Searched in:
+    - 'C:\\Users\\PETER/nltk_data'
+    - 'F:\\projects\\NLP-Ai-chatbot\\venv\\nltk_data'
+    - 'F:\\projects\\NLP-Ai-chatbot\\venv\\share\\nltk_data'
+    - 'F:\\projects\\NLP-Ai-chatbot\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\PETER\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
+2026-04-21 06:08:00.035492 - error: 
+**********************************************************************
+  Resource 'punkt_tab' not found.
+  Please use the NLTK Downloader to obtain the resource:
+
+  >>> import nltk
+  >>> nltk.download('punkt_tab')
+
+  For more information see: https://www.nltk.org/data.html
+
+  Attempted to load 'tokenizers/punkt_tab/english/'
+
+  Searched in:
+    - 'C:\\Users\\PETER/nltk_data'
+    - 'F:\\projects\\NLP-Ai-chatbot\\venv\\nltk_data'
+    - 'F:\\projects\\NLP-Ai-chatbot\\venv\\share\\nltk_data'
+    - 'F:\\projects\\NLP-Ai-chatbot\\venv\\lib\\nltk_data'
+    - 'C:\\Users\\PETER\\AppData\\Roaming\\nltk_data'
+    - 'C:\\nltk_data'
+    - 'D:\\nltk_data'
+    - 'E:\\nltk_data'
+**********************************************************************
+
