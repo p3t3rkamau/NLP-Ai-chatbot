@@ -13,7 +13,7 @@ from handlers import play_rock_paper_scissors
 misc_bp = Blueprint("misc", __name__)
 
 
-@misc_bp.route("/clear")
+@misc_bp.route("/clear", methods=["POST"])
 def clear():
     clear_history()
     resp = make_response(render_template("index.html", conversation_history=[]))

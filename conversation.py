@@ -19,11 +19,21 @@ def get_conversation_history() -> list:
     return list(_SESSION_HISTORY.get(sid, []))
 
 
+def get_session_id() -> str:
+    """Return current session ID, creating one if needed."""
+    return _ensure_session_id()
+
+
 def set_conversation_cookie(response, history: list):
     """Compatibility helper; conversation is now stored server-side."""
     sid = _ensure_session_id()
     _SESSION_HISTORY[sid] = history[-MAX_HISTORY_MESSAGES:]
     return response
+
+
+def update_history_direct(sid: str, history: list) -> None:
+    """Update history by session ID without a response object (used by streaming)."""
+    _SESSION_HISTORY[sid] = history[-MAX_HISTORY_MESSAGES:]
 
 
 def add_to_history(history: list, user_msg: str, bot_msg: str) -> list:

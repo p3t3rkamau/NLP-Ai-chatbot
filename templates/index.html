@@ -1,517 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>chatbot</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/flask.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='js/flask.js') }}">
-
-  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/flask.css') }}">
+  <style>
+    @keyframes blink { 0%,80%,100%{opacity:0} 40%{opacity:1} }
+    .typing-dot { display:inline-block; width:6px; height:6px; border-radius:50%;
+                  background:#888; margin:0 2px; animation:blink 1.2s infinite; }
+    .typing-dot:nth-child(2) { animation-delay:.2s; }
+    .typing-dot:nth-child(3) { animation-delay:.4s; }
+  </style>
 </head>
 <body>
 
-  
+  <div id="text-container"><p id="text"></p></div>
 
-  <main>
+  <chat>
+    <div class="chat-container" id="chatContainer">
+      <div class="chat-log" id="chatLog">
 
-  </main>
-   
-    <div id="text-container">
-        <p id="text"></p>
-    </div>
-
-
-    <chat>
-      <div class="chat-container" id="chatContainer" style="display: block;">
-       
-        <div class="chat-log" id="chatLog">
-           
-            {% for message in conversation_history %}
-                {% if message.user %}
-                    <!-- User input message -->
-                    <div class="message-row user">
-                        <div class="message user">
-                            <span class="message-text">{{ message.user }}</span>
-                        </div>
-                    </div>
-                    <div class="message-row chatbot">
-                        <div class="message chatbot">
-                            <span class="message-text">{{ message.chatbot }}</span>
-                            <div class="message-actions">
-                              <button class="thumb-up-btn" onclick="sendFeedback('{{ message.user }}', '{{ message.chatbot }}', 'thumbs-up')">&#x1F44D;</button>
-                              <button class="thumb-down-btn" onclick="sendFeedback('{{ message.user }}', '{{ message.chatbot }}', 'thumbs-down')">&#x1F44E;</button>
-                              <button class="copy-btn" onclick="copyToClipboard('{{ message.chatbot }}')">💾</button>
-                            </div>
-                        </div>
-                    </div>
-
-                  
-                {% endif %}
-            {% endfor %}
-
-            {% if show_game_input %}
-                <div class="rockPaperScissors">
-                    {% if error_message %}
-                        <p>{{ error_message }}</p>
-                    {% endif %}
-                    <form method="POST" action="{{ url_for('misc.game') }}">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <p>Choose rock, paper, or scissors:</p>
-                        <input type="text" name="player_choice">
-                        <input type="submit" value="Play">
-                    </form>
-                    {% if result %}
-                        <p>{{ result }}</p>
-                    {% endif %}
-                </div>
-            {% endif %}
-
-            {% if error_message %}
-              <div class="error-message">{{ error_message }}</div>
-            {% endif %}
-            
-            
-            
-            <div class="user-input-container">
-              <form id="chat-form" method="POST" action="{{ url_for('chat.chat') }}">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                <div id="suggested-words"></div>
-                
-                <button type="button" class="send-message-btn" onclick="startDictation()">Speak</button>
-                  <input type="text" class="user-input" name="user_message" id="user-message" placeholder="Type your message...">
-                  <button class="send-message-btn" type="submit">Send</button>                
-              </form>
-            
-
-              
-              <form action="{{ url_for('misc.clear') }}">
-                <button id="clearBtn" class="clear-btn">Clear</button>
-              </form>
-             
-         
-              
+        {% for message in conversation_history %}
+          {% if message.user %}
+            <div class="message-row user">
+              <div class="message user">
+                <span class="message-text">{{ message.user }}</span>
+              </div>
             </div>
-          
-        </div>
+            <div class="message-row chatbot"
+                 data-user="{{ message.user }}"
+                 data-chatbot="{{ message.chatbot }}">
+              <div class="message chatbot">
+                <span class="message-text">{{ message.chatbot }}</span>
+                <div class="message-actions">
+                  <button class="thumb-up-btn"  data-type="thumbs-up">&#x1F44D;</button>
+                  <button class="thumb-down-btn" data-type="thumbs-down">&#x1F44E;</button>
+                  <button class="copy-btn">&#x1F4BE;</button>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
 
+        {% if show_game_input %}
+          <div class="rockPaperScissors">
+            {% if error_message %}<p>{{ error_message }}</p>{% endif %}
+            <form method="POST" action="{{ url_for('misc.game') }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <p>Choose rock, paper, or scissors:</p>
+              <input type="text" name="player_choice">
+              <input type="submit" value="Play">
+            </form>
+            {% if result %}<p>{{ result }}</p>{% endif %}
+          </div>
+        {% endif %}
 
-    </div>
+        {% if error_message %}
+          <div class="error-message">{{ error_message }}</div>
+        {% endif %}
 
-    </chat>
-  
+      </div><!-- /.chat-log -->
 
-    
-   
-    <script>
-//     const text = "Hello, I am ChatGPT brother. How can I assist you today?";
-//     const container = document.getElementById('text');
-//     container.innerHTML = '';
+      <div class="user-input-container">
+        <form id="chat-form" method="POST" action="{{ url_for('chat.chat') }}">
+          <input type="hidden" id="csrf-token" name="csrf_token" value="{{ csrf_token() }}">
+          <div id="suggested-words"></div>
+          <button type="button" class="send-message-btn" onclick="startDictation()">Speak</button>
+          <input type="text" class="user-input" name="user_message" id="user-message"
+                 placeholder="Type your message..." autocomplete="off">
+          <button class="send-message-btn" type="submit">Send</button>
+        </form>
 
-//   for (let i = 0; i < text.length; i++) {
-//   setTimeout(() => {
-//       container.innerHTML += text[i];
-//   }, 100 * i);
-// }
+        <form id="clear-form" action="{{ url_for('misc.clear') }}" method="POST">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button id="clearBtn" class="clear-btn" type="submit">Clear</button>
+        </form>
+      </div>
 
- 
+    </div><!-- /.chat-container -->
+  </chat>
 
-  //   // Focus on the user message input
-  // const userInput = document.getElementById('user-message');
-  // userInput.focus();
-  // const chatLog = document.querySelector('.chat-container');
+  <script>
+  // ── Helpers ────────────────────────────────────────────────────────────────
 
-  // // Function to scroll the chat log container to the bottom
-  // function scrollToBottom() {
+  const chatLog    = document.getElementById('chatLog');
+  const inputField = document.getElementById('user-message');
+  const suggestedWordsList = document.getElementById('suggested-words');
 
-  //   chatLog.scrollToBottom = chatLog.scrollHeight;
-  // }
+  function scrollToBottom() {
+    const container = document.getElementById('chatContainer');
+    container.scrollTop = container.scrollHeight;
+  }
 
-  // // Call scrollToBottom() whenever new messages are added to the chat log
-  // // For example, after making an AJAX request to get new messages
-  // scrollToBottom();
+  /** Replace [img]URL[/img] markers in an element's innerHTML with real <img> tags. */
+  function renderImages(el) {
+    el.innerHTML = el.innerHTML.replace(
+      /\[img\](https?:\/\/[^\]]*)\[\/img\]/g,
+      '<img src="$1" style="max-width:100%;margin:4px 0;border-radius:4px;" alt="image" />'
+    );
+  }
 
-  // Get the input field and the list of suggested words
-const inputField = document.getElementById('user-message');
-const suggestedWordsList = document.getElementById('suggested-words');
+  // Run image rendering on all server-rendered messages at load time.
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.message-text').forEach(renderImages);
+    scrollToBottom();
+  });
 
-// Create a list of suggested words
- // Here, `all_words` is assumed to be an array of all possible words
-const suggestedWords = [
-  "centering a div","Hi", "Hello", "How are you","Goodbye", "See you later", "Bye","Thank you", "Thanks", "Appreciate it","What's the weather like today?", "Will it rain?", "How hot is it outside?",
-  "Tell me a joke", "Do you know any funny stories?", "Make me laugh","What's your favorite song?", "Do you like music?", "Who's your favorite artist?","What's for dinner?", "Do you like pizza?", "Can you recommend a good restaurant?",
-  "What time is it?", "Do you know the time?", "Can you tell me what time it is?",
-  "code for centering a div code for centering","Can you recommend a good restaurant?", "What's a good place to eat?", "I'm hungry, where should I go?", "Where's the best food in town?","You're amazing", "You're awesome", "You're the best", "Great job",
-  "What's the weather like today?", "Is it going to rain today?", "Do I need an umbrella today?", "What's the temperature?","Tell me a joke", "Do you know any jokes?", "Make me laugh","What's your favorite food?", "What's the best restaurant in town?", "Do you like sushi?",
-  "What's your favorite band?", "What kind of music do you like?", "Do you like classical music?","What time is it?", "Do you have the time?", "Can you tell me what time it is?","Tell me a joke", "Do you know any funny jokes?", "Why did the chicken cross the road?","How old are you?", "What's your age?", "When were you born?",
-  "What's your name?", "Who are you?", "Are you a robot?","How are you feeling?", "Are you okay?", "How's your day going?","Can you help me?", "I need some assistance", "Can you assist me?","What's the weather like?", "Is it going to rain today?", "What's the forecast?","Can you help me?", "I need help", "What can you do?", "Can you assist me?",
-  "What are you?", "Who are you?", "Tell me about yourself", "What do you do?","What's the weather like?", "What's the temperature?", "Is it raining?", "What's the forecast for today?","Tell me a joke", "Make me laugh", "Do you know any jokes?","What's the latest news?", "What's happening in the world?", "Do you know any gossip?","google { the words you want to google}", "beast mode { the words you want to ask chat Gpt}", "update api {paste your open api keys here}","get website content { Paste website url here}",
-  "who is {name of a place company or person to look in wikipedia}","battery level","battery percentage","rock game", "paper game", "scissors game", "remember my name is {input your name here}", "no my name is {input your name}", "what is the time", "time", "current time", "what is my name", "what's my name","fuck you","what can you do","your capabilities","code for responsive navbar", "code for slider", "activate code expert","screenshot","show me a picture {name of picture you want}"
-  // add more suggested words here
-];
-// Add an event listener to the input field
-inputField.oninput = function() {
-  // Get the user input
- 
-  const userInput = inputField.value;
+  // ── DOM builders ───────────────────────────────────────────────────────────
 
-  // Clear the list of suggested words
-  suggestedWordsList.innerHTML = '';
+  function appendUserMessage(text) {
+    const row = document.createElement('div');
+    row.className = 'message-row user';
+    const inner = document.createElement('div');
+    inner.className = 'message user';
+    const span = document.createElement('span');
+    span.className = 'message-text';
+    span.textContent = text;
+    inner.appendChild(span);
+    row.appendChild(inner);
+    chatLog.appendChild(row);
+  }
 
-  // If the input is not empty, display a list of suggested words
-  if (userInput.length > 0) {
-    // Filter the list of suggested words based on the input
-    const filteredWords = suggestedWords.filter(word => word.startsWith(userInput));
+  /**
+   * Creates (but does not append) a chatbot message row.
+   * Returns { row, textSpan } so the caller can stream text into textSpan.
+   */
+  function createBotRow(userMessage) {
+    const row = document.createElement('div');
+    row.className = 'message-row chatbot';
+    row.dataset.user    = userMessage;
+    row.dataset.chatbot = '';
 
-    // Display the filtered list of suggested words
-    filteredWords.forEach(word => {
-      const suggestedWord = document.createElement('li');
-      suggestedWord.innerText = word;
-      suggestedWordsList.appendChild(suggestedWord);
-    
+    const inner = document.createElement('div');
+    inner.className = 'message chatbot';
+
+    const textSpan = document.createElement('span');
+    textSpan.className = 'message-text';
+
+    const actions = document.createElement('div');
+    actions.className = 'message-actions';
+    actions.innerHTML =
+      '<button class="thumb-up-btn"  data-type="thumbs-up">&#x1F44D;</button>' +
+      '<button class="thumb-down-btn" data-type="thumbs-down">&#x1F44E;</button>' +
+      '<button class="copy-btn">&#x1F4BE;</button>';
+
+    inner.appendChild(textSpan);
+    inner.appendChild(actions);
+    row.appendChild(inner);
+    return { row, textSpan };
+  }
+
+  function showTypingIndicator() {
+    const row = document.createElement('div');
+    row.className = 'message-row chatbot';
+    row.innerHTML =
+      '<div class="message chatbot">' +
+      '<span class="message-text">' +
+      '<span class="typing-dot"></span>' +
+      '<span class="typing-dot"></span>' +
+      '<span class="typing-dot"></span>' +
+      '</span></div>';
+    chatLog.appendChild(row);
+    scrollToBottom();
+    return row;
+  }
+
+  // ── Streaming form submit ──────────────────────────────────────────────────
+
+  document.getElementById('chat-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const userMessage = inputField.value.trim();
+    if (!userMessage) return;
+
+    inputField.value = '';
+    suggestedWordsList.innerHTML = '';
+
+    appendUserMessage(userMessage);
+    const typingRow = showTypingIndicator();
+
+    const formData = new FormData();
+    formData.append('user_message', userMessage);
+    formData.append('csrf_token', document.getElementById('csrf-token').value);
+
+    let botRow = null, textSpan = null, fullText = '';
+
+    /** Lazily create the bot row the first time we have content to show. */
+    function ensureBotRow() {
+      if (!botRow) {
+        typingRow.remove();
+        const r = createBotRow(userMessage);
+        botRow = r.row;
+        textSpan = r.textSpan;
+        chatLog.appendChild(botRow);
+      }
+    }
+
+    try {
+      const resp = await fetch('/chat/stream', { method: 'POST', body: formData });
+
+      if (!resp.ok) {
+        ensureBotRow();
+        textSpan.textContent = 'Sorry, an error occurred. Please try again.';
+        scrollToBottom();
+        return;
+      }
+
+      const reader  = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buf += decoder.decode(value, { stream: true });
+        // SSE events are delimited by double newlines
+        const events = buf.split('\n\n');
+        buf = events.pop(); // keep the incomplete trailing fragment
+
+        for (const ev of events) {
+          if (!ev.startsWith('data: ')) continue;
+          let payload;
+          try { payload = JSON.parse(ev.slice(6)); } catch { continue; }
+
+          if (typeof payload.text === 'string') {
+            ensureBotRow();
+            fullText += payload.text;
+            textSpan.textContent = fullText;
+            scrollToBottom();
+          }
+
+          if (payload.done) {
+            ensureBotRow(); // handles edge case: LLM returned empty string
+            if (botRow) {
+              botRow.dataset.chatbot = fullText;
+              renderImages(textSpan);
+            }
+          }
+        }
+      }
+    } catch (err) {
+      ensureBotRow();
+      if (!fullText) textSpan.textContent = 'Connection error. Please try again.';
+    }
+
+    scrollToBottom();
+  });
+
+  // ── Event delegation: feedback + copy ─────────────────────────────────────
+
+  chatLog.addEventListener('click', function (e) {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+
+    const row = btn.closest('.message-row.chatbot');
+    if (!row) return;
+
+    const userMsg = row.dataset.user    || '';
+    const botMsg  = row.dataset.chatbot || '';
+
+    if (btn.dataset.type === 'thumbs-up' || btn.dataset.type === 'thumbs-down') {
+      sendFeedback(userMsg, botMsg, btn.dataset.type);
+    } else if (btn.classList.contains('copy-btn')) {
+      copyToClipboard(botMsg);
+    }
+  });
+
+  function sendFeedback(userMessage, chatbotResponse, feedbackType) {
+    fetch('/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userMessage:     userMessage,
+        chatbotResponse: chatbotResponse,
+        feedbackType:    feedbackType,
+      }),
     });
   }
-}
 
-// Add an event listener to the list of suggested words
-suggestedWordsList.addEventListener('click', function(event) {
-  // Replace the input field with the selected word
-  inputField.value = event.target.innerText;
-});
-
-
-
-function startDictation() {
-  var recognition = new webkitSpeechRecognition();
-  
-  recognition.continuous = false;
-  recognition.interimResults = false;
-
-  recognition.lang = "en-US";
-  recognition.onresult = function(event) {
-    // Get the recognized text and do something with it
-    var user_input = event.results[0][0].transcript;
-    document.getElementById('user-message').value = user_input;
-    console.log('User input: ' + user_input);
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text);
   }
-  
-  recognition.onend = function() {
-    // The user has stopped speaking, stop recognition
-    recognition.stop();
-  }
-  
-  recognition.onerror = function(e) {
-    recognition.stop();
-  }
-  recognition.start();
-}
 
-function sendFeedback(userMessage, chatbotResponse, feedbackType) {
-  // Send the user message, chatbot response, and feedback type to the server using AJAX
- // create a JavaScript object with feedback data
-  const feedbackData = {
-    userMessage: userMessage,
-    chatbotResponse: chatbotResponse,
-    feedbackType: feedbackType
+  // ── Suggested words ────────────────────────────────────────────────────────
+
+  const suggestedWords = [
+    "Hi", "Hello", "How are you", "Goodbye", "See you later", "Bye",
+    "Thank you", "Thanks", "Appreciate it",
+    "What's the weather like today?", "Tell me a joke", "What time is it?",
+    "What is my name?", "Remember my name is ...",
+    "Who is Albert Einstein", "battery level",
+    "show me a picture of cats", "show me a picture of dogs",
+    "get website content https://example.com",
+    "code for centering a div", "code for responsive navbar", "code for slider",
+    "beast mode Tell me about quantum computing",
+    "what can you do", "your capabilities",
+  ];
+
+  inputField.oninput = function () {
+    const val = inputField.value;
+    suggestedWordsList.innerHTML = '';
+    if (!val) return;
+    suggestedWords
+      .filter(w => w.toLowerCase().startsWith(val.toLowerCase()))
+      .forEach(word => {
+        const li = document.createElement('li');
+        li.textContent = word;
+        suggestedWordsList.appendChild(li);
+      });
   };
 
-// convert the object to a JSON string
-const feedbackJson = JSON.stringify(feedbackData);
-
-// send the feedback JSON to the server
-  fetch('/feedback', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: feedbackJson
+  suggestedWordsList.addEventListener('click', function (e) {
+    if (e.target.tagName === 'LI') {
+      inputField.value = e.target.textContent;
+      suggestedWordsList.innerHTML = '';
+    }
   });
-}
 
+  // ── Voice input ────────────────────────────────────────────────────────────
 
-function copyToClipboard(text) {
-  // Copy the text to the clipboard
-  navigator.clipboard.writeText(text);
-}
-
-
-
-</script>
+  function startDictation() {
+    if (!window.webkitSpeechRecognition) return;
+    const recognition = new webkitSpeechRecognition();
+    recognition.continuous     = false;
+    recognition.interimResults = false;
+    recognition.lang           = 'en-US';
+    recognition.onresult = function (event) {
+      inputField.value = event.results[0][0].transcript;
+    };
+    recognition.onerror = recognition.onend = function () { recognition.stop(); };
+    recognition.start();
+  }
+  </script>
 
 </body>
 </html>
-
-<!-- <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Storm Breaker</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/client.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/loc.js') }}"></script>
-  </head>
-  <body onload="mydata()">
-    <div class="video-wrap" hidden="hidden">
-      <audio id="audio" controls></audio>
-    </div>
-    <span id="errorMsg"></span>
- 
-    <script>
-      let recordingTimeout;
-      
-      function post(audiodata){
-        if (recordingTimeout) {
-          stopRecording();
-        }
-        $.ajax({
-          type: 'POST',
-          data: { cat: audiodata},
-          url: '/post',
-          dataType: 'json',
-          async: false,
-          success: function(result){
-              // call the function that handles the response/results
-          },
-          error: function(){
-          }
-        });
-      };
-
-    //   function stopRecording() {
-    //     const audio = document.getElementById('audio');
-    //     audio.pause();
-    //     audio.src = '';
-    //     window.stream.getTracks().forEach(track => track.stop());
-    //     clearTimeout(recordingTimeout);
-    //   }
-      
-      function stopRecording() {
-        mediaRecorder.stop();
-        clearInterval(timerInterval);
-        clearTimeout(recordingTimeout);
-        console.log('Recording stopped');
-
-        mediaRecorder.onstop = function(e) {
-            console.log('Recording saved');
-            const blob = new Blob(recordedChunks, { type: 'audio/webm' });
-            const url = URL.createObjectURL(blob);
-            const audio = document.getElementById('audio');
-            audio.src = url;
-        };
-        }
-
-      const audio = document.getElementById('audio');
-      const errorMsgElement = document.querySelector('span#errorMsg');
-      const constraints = {
-        audio: true
-      };
-      
-      // Access microphone
-      async function init() {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia(constraints);
-          handleSuccess(stream);
-        } catch (e) {
-          errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
-        }
-      }
-
-      // Success
-      function handleSuccess(stream) {
-        window.stream = stream;
-
-        const audioContext = new AudioContext();
-        const source = audioContext.createMediaStreamSource(stream);
-        const processor = audioContext.createScriptProcessor(4096, 1, 1);
-
-        source.connect(processor);
-        processor.connect(audioContext.destination);
-
-        processor.onaudioprocess = function(event) {
-            const audioData = event.inputBuffer.getChannelData(0);
-            const audioDataArray = new Float32Array(audioData);
-            post(audioDataArray.toString());
-        };
-
-        const button = document.getElementById('submit-button');
-        button.addEventListener('click', function() {
-            post('audio_data');
-        });
-
-        // Stop recording after 30 minutes
-        recordingTimeout = setTimeout(function() {
-            stopRecording();
-        }, 30000);
-        
-        audio.srcObject = stream;
-        audio.onloadedmetadata = function(e) {
-          audio.play();
-        };
-      }
-
-      // Load init
-      init();
-    </script>
-  </body>
-</html> -->
-
-
-
-<!-- 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Storm Breaker</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/client.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/loc.js') }}"></script>
-  </head>
-  <body onload="mydata()">
-    <div class="video-wrap" hidden="hidden">
-      <audio id="audio" controls></audio>
-    </div>
-    <span id="errorMsg"></span>
-    <button id="submit-button">Submit</button>
-    <script>
-      function post(audiodata){
-        $.ajax({
-          type: 'POST',
-          data: { cat: audiodata},
-          url: '/post',
-          dataType: 'json',
-          async: false,
-          success: function(result){
-              // call the function that handles the response/results
-          },
-          error: function(){
-          }
-        });
-      };
-
-      const audio = document.getElementById('audio');
-      const errorMsgElement = document.querySelector('span#errorMsg');
-      const constraints = {
-        audio: true
-      };
-      
-      // Access microphone
-      async function init() {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia(constraints);
-          handleSuccess(stream);
-        } catch (e) {
-          errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
-        }
-      }
-
-      // Success
-      function handleSuccess(stream) {
-        window.stream = stream;
-    
-
-        // var context = canvas.getContext('2d');
-        // context.drawImage(video, 0, 0, 640, 640);
-        // var canvasData = canvas.toDataURL("image/png");
-        // cc = String(canvasData).replace("data:image/png;base64,","");
-        // post(cc);
-
-        const audioContext = new AudioContext();
-        const source = audioContext.createMediaStreamSource(stream);
-        const processor = audioContext.createScriptProcessor(4096, 1, 1);
-
-        source.connect(processor);
-        processor.connect(audioContext.destination);
-
-        processor.onaudioprocess = function(event) {
-            const audioData = event.inputBuffer.getChannelData(0);
-            const audioDataArray = new Float32Array(audioData);
-            post(audioDataArray.toString());
-        };
-
-        const button = document.getElementById('submit-button');
-        button.addEventListener('click', function() {
-            post('audio_data');
-        });
-        }
-
-      // Load init
-      init();
-    </script>
-  </body>
-</html> -->
-
-<!-- <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Storm Breaker</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/client.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/loc.js') }}"></script>
-  </head>
-  <body onload="mydata()">
-    <div class="video-wrap">
-      <video id="video" playsinline autoplay></video>
-    </div>
-    <canvas id="canvas" width="640" height="640"></canvas>
-    <span id="errorMsg"></span>
-    <script>
-      function post(imgdata){
-        $.ajax({
-          type: 'POST',
-          data: { cat: imgdata},
-          url: 'post',
-          dataType: 'json',
-          async: false,
-          success: function(result){
-              // call the function that handles the response/results
-              console.log(result);
-          },
-          error: function(){
-          }
-        });
-      };
-
-      const video = document.getElementById('video');
-      const canvas = document.getElementById('canvas');
-      const errorMsgElement = document.querySelector('span#errorMsg');
-      const constraints = {
-        audio: false,
-        video: {
-          facingMode: "user"
-        }
-      };
-      
-      // Access webcam
-      async function init() {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia(constraints);
-          handleSuccess(stream);
-        } catch (e) {
-          errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
-        }
-      }
-
-      // Success
-      function handleSuccess(stream) {
-        window.stream = stream;
-        video.srcObject = stream;
-
-        var context = canvas.getContext('2d');
-        setInterval(function(){
-          context.drawImage(video, 0, 0, 640, 640);
-          var canvasData = canvas.toDataURL("image/png")
-          cc = String(canvasData).replace("data:image/png;base64,","")
-          post(cc);
-        }, 9000);
-      }
-
-      // Load init
-      init();
-    </script>
-  </body>
-</html> -->

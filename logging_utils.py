@@ -3,7 +3,7 @@
 import os
 import json
 import datetime
-from config import CHATLOG_FILE, QUERY_FILE, NAMES_FILE, FEEDBACK_FILE, MAX_CHATLOG_BYTES, MAX_FEEDBACK_BYTES
+from config import CHATLOG_FILE, NAMES_FILE, FEEDBACK_FILE, MAX_CHATLOG_BYTES, MAX_FEEDBACK_BYTES
 
 
 def _rotate_if_needed(file_path: str, max_bytes: int) -> None:
@@ -18,19 +18,6 @@ def log(label: str, text: str) -> None:
     _rotate_if_needed(CHATLOG_FILE, MAX_CHATLOG_BYTES)
     with open(CHATLOG_FILE, "a", encoding="utf-8") as f:
         f.write(f"{datetime.datetime.now()} - {label}: {text}\n")
-
-
-def read_last_query() -> str:
-    try:
-        with open(QUERY_FILE, "r", encoding="utf-8") as f:
-            return json.load(f).get("last_query", "")
-    except (FileNotFoundError, json.JSONDecodeError):
-        return ""
-
-
-def write_last_query(query: str) -> None:
-    with open(QUERY_FILE, "w", encoding="utf-8") as f:
-        json.dump({"last_query": query}, f)
 
 
 def remember_name(name: str) -> None:

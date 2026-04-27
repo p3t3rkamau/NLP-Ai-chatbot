@@ -4,27 +4,32 @@ import ipaddress
 import os
 import random
 from urllib.parse import urlparse
+
 import requests
 import wikipedia
 import psutil
 from bs4 import BeautifulSoup
 from flask_login import current_user
-from markupsafe import escape
+
 from config import UNSPLASH_ACCESS_KEY, API_KEY_FILE
 from logging_utils import remember_name, recall_name
 
 
 def beast_mode(query: str) -> str:
-    """Run OpenAI completion for beast mode queries."""
+    """Run OpenAI chat completion for beast mode queries."""
     try:
         import openai
+        api_key = None
         if os.path.isfile(API_KEY_FILE):
             with open(API_KEY_FILE, encoding="utf-8") as f:
-                openai.api_key = f.read().strip()
-        response = openai.Completion.create(
-            engine="text-davinci-002", prompt=f"User: {query}\nChatbot:", max_tokens=100
+                api_key = f.read().strip() or None
+        client = openai.OpenAI(api_key=api_key)
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": query}],
+            max_tokens=200,
         )
-        return response.choices[0].text.strip()
+        return response.choices[0].message.content.strip()
     except Exception:
         return "Beast mode is currently unavailable."
 
@@ -62,7 +67,7 @@ def get_website_content(user_message: str) -> str:
     try:
         resp = requests.get(url, timeout=10, allow_redirects=False)
         soup = BeautifulSoup(resp.content, "html.parser")
-        return escape(soup.get_text()[:2000])
+        return soup.get_text()[:2000]
     except Exception:
         return "Could not fetch website content."
 
@@ -84,15 +89,15 @@ def get_battery_status() -> str:
 
 
 def get_name_response(name: str) -> str:
-    safe_name = escape(name)
-    remember_name(str(safe_name))
+    safe_name = name.strip()[:100]
+    remember_name(safe_name)
     return f"Got it! I'll remember that your name is {safe_name}. 👍"
 
 
 def recall_user_name() -> str:
     name = recall_name()
     if name:
-        return f"Your name is {escape(name)}!"
+        return f"Your name is {name}!"
     return "I don't have your name saved yet. Tell me with 'remember my name is ...'."
 
 
@@ -119,21 +124,26 @@ def get_code_snippet(query: str) -> str:
 
 
 def fetch_unsplash_image(search_term: str) -> str:
+    """Return image results as [img]URL[/img] markers (rendered by client JS)."""
     if not UNSPLASH_ACCESS_KEY:
         return "Image search is not configured."
+    safe_term = search_term.strip()[:100]
     try:
         resp = requests.get(
             "https://api.unsplash.com/search/photos/",
             headers={"Authorization": f"Client-ID {UNSPLASH_ACCESS_KEY}"},
-            params={"query": search_term, "per_page": 2},
+            params={"query": safe_term, "per_page": 2},
             timeout=10,
         )
         results = resp.json().get("results", [])
         if not results:
             return "I couldn't find any pictures for that."
-        urls = [escape(r["urls"]["regular"]) for r in results]
-        tags = "".join(f'<img src="{u}" style="max-width:100%;margin:4px 0;" />' for u in urls)
-        return f"Here are some pictures of {escape(search_term)}: {tags}"
+        img_markers = " ".join(
+            f"[img]{r['urls']['regular']}[/img]"
+            for r in results
+            if r.get("urls", {}).get("regular", "").startswith("https://")
+        )
+        return f"Here are some pictures of {safe_term}: {img_markers}"
     except Exception:
         return "Image search failed."
 
